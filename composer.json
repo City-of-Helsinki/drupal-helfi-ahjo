@@ -1,0 +1,17 @@
+{
+    "name": "drupal/helfi_ahjo",
+    "description": "OpenAhjo integration",
+    "type": "drupal-custom-module",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "require": {
+        "drupal/helfi_api_base": "*",
+        "drupal/migrate_plus": "~5.0",
+        "drupal/migrate_tools": "~5.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+        "drupal/coder": "^8.3"
+    }
+}
