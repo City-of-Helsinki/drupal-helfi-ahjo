@@ -19,6 +19,7 @@ use Drupal\helfi_api_base\Entity\RemoteEntityBase;
  *   label_collection = @Translation("Ahjo - Issue"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
+ *     "list_builder" = "Drupal\Core\Entity\EntityListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
  *     "form" = {
