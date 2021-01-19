@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: ahjo
-label: ahjo
-description: ''
-source_type: null
-module: helfi_ahjo
-shared_configuration: null
