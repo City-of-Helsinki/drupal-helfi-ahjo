@@ -6,8 +6,6 @@
     "minimum-stability": "dev",
     "require": {
         "drupal/helfi_api_base": "*",
-        "drupal/migrate_plus": "~5.0",
-        "drupal/migrate_tools": "~5.0",
         "ext-json": "*"
     },
     "require-dev": {
