@@ -155,6 +155,8 @@ class OpenAhjo extends SourcePluginBase implements ContainerFactoryPluginInterfa
    *   The remote data.
    */
   protected function getRemoteData() : \Generator {
+    $processed = 0;
+
     foreach ($this->urls as $url) {
       $content = $this->getContent($url);
 
@@ -163,7 +165,13 @@ class OpenAhjo extends SourcePluginBase implements ContainerFactoryPluginInterfa
         // ignored (not changed) rows.
         // @see static::NUM_IGNORED_ROWS_BEFORE_STOPPING.
         if ($this->isPartialMigrate() && ($this->ignoredRows >= static::NUM_IGNORED_ROWS_BEFORE_STOPPING)) {
-          break;
+          break 2;
+        }
+        $processed++;
+
+        // Allow number of items to be limited by using an env variable.
+        if (($this->getLimit() > 0) && $processed > $this->getLimit()) {
+          break 2;
         }
         yield $object;
       }
