@@ -8,11 +8,8 @@ use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\helfi_api_base\MigrateTrait;
-use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
-use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Source plugin for retrieving data from OpenAhjo.
@@ -21,7 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "open_ahjo"
  * )
  */
-class OpenAhjo extends SourcePluginBase implements ContainerFactoryPluginInterface {
+class OpenAhjo extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
 
   use MigrateTrait;
 
@@ -65,13 +62,6 @@ class OpenAhjo extends SourcePluginBase implements ContainerFactoryPluginInterfa
    * @var int
    */
   protected int $limit = 0;
-
-  /**
-   * Keep track of ignored rows to stop migrate after N ignored rows.
-   *
-   * @var int
-   */
-  protected int $ignoredRows = 0;
 
   /**
    * {@inheritdoc}
@@ -149,12 +139,11 @@ class OpenAhjo extends SourcePluginBase implements ContainerFactoryPluginInterfa
   }
 
   /**
-   * Gets the remote data.
-   *
-   * @return \Generator
-   *   The remote data.
+   * {@inheritdoc}
    */
-  protected function getRemoteData() : \Generator {
+  protected function initializeListIterator() : \Iterator {
+    $this->buildUrls();
+
     $processed = 0;
 
     foreach ($this->urls as $url) {
@@ -176,66 +165,6 @@ class OpenAhjo extends SourcePluginBase implements ContainerFactoryPluginInterfa
         yield $object;
       }
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function next() {
-    parent::next();
-
-    // Check if the current row has changes and increment ignoredRows variable
-    // to allow us to stop migrate early if we have no changes.
-    if ($this->isPartialMigrate() && $this->currentRow && !$this->currentRow->changed()) {
-      $this->ignoredRows++;
-    }
-  }
-
-  /**
-   * Sends a HTTP request and returns response data as array.
-   *
-   * @param string $url
-   *   The url.
-   *
-   * @return array
-   *   The JSON returned by Ahjo service.
-   */
-  protected function getContent(string $url) : array {
-    try {
-      $content = (string) $this->httpClient->request('GET', $url)->getBody();
-    }
-    catch (GuzzleException $e) {
-      return [];
-    }
-    return \GuzzleHttp\json_decode($content, TRUE);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function initializeIterator() {
-    $this->buildUrls();
-
-    return $this->getRemoteData();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(
-    ContainerInterface $container,
-    array $configuration,
-    $plugin_id,
-    $plugin_definition,
-    MigrationInterface $migration = NULL
-  ) {
-    $instance = new static($configuration, $plugin_id, $plugin_definition, $migration);
-    $instance->httpClient = $container->get('http_client');
-
-    if (!isset($configuration['url'])) {
-      throw new \InvalidArgumentException('The "url" configuration missing.');
-    }
-    return $instance;
   }
 
 }
