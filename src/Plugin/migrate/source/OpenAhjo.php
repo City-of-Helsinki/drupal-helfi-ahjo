@@ -9,9 +9,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\helfi_api_base\MigrateTrait;
 use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
-use Drupal\migrate\Plugin\MigrationInterface;
 use GuzzleHttp\ClientInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Source plugin for retrieving data from OpenAhjo.
