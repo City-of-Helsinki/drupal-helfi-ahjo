@@ -118,17 +118,17 @@ class OpenAhjoTest extends ApiKernelTestBase {
     /** @var \Drupal\helfi_ahjo\Plugin\migrate\source\OpenAhjo $source */
     $source = $this->sourcePluginManager->createInstance('open_ahjo', $configuration, $migration);
     $this->assertCount(60, $source);
-    $this->assertEqual((string) $source, 'OpenAhjo');
+    $this->assertEquals((string) $source, 'OpenAhjo');
     $this->assertArrayHasKey('id', $source->getIds());
 
     $source->rewind();
 
-    $this->assertEqual($source->current()->getSource()['subject'], 'Subject 1');
-    $this->assertEqual($source->current()->getSource()['id'], '1');
+    $this->assertEquals($source->current()->getSource()['subject'], 'Subject 1');
+    $this->assertEquals($source->current()->getSource()['id'], '1');
 
     $source->next();
-    $this->assertEqual($source->current()->getSource()['subject'], 'Subject 2');
-    $this->assertEqual($source->current()->getSource()['id'], '2');
+    $this->assertEquals($source->current()->getSource()['subject'], 'Subject 2');
+    $this->assertEquals($source->current()->getSource()['id'], '2');
   }
 
 }
