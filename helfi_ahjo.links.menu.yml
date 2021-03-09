@@ -8,4 +8,4 @@ entity.ahjo_issue.collection:
   title: Ahjo - Issue entities
   description: List of TPR unit entities
   route_name: entity.ahjo_issue.collection
-  parent: system.admin_content
+  parent: helfi_api_base.integrations

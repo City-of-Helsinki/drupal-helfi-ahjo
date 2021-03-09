@@ -52,9 +52,9 @@ use Drupal\helfi_api_base\Entity\RemoteEntityBase;
  *   },
  *   links = {
  *     "canonical" = "/ahjo-issue/{ahjo_issue}",
- *     "edit-form" = "/admin/content/ahjo-issue/{ahjo_issue}/edit",
- *     "delete-form" = "/admin/content/ahjo-issue/{ahjo_issue}/delete",
- *     "collection" = "/admin/content/ahjo-issue"
+ *     "edit-form" = "/admin/content/integrations/ahjo-issue/{ahjo_issue}/edit",
+ *     "delete-form" = "/admin/content/integrations/ahjo-issue/{ahjo_issue}/delete",
+ *     "collection" = "/admin/content/integrations/ahjo-issue"
  *   },
  *   field_ui_base_route = "ahjo_issue.settings"
  * )

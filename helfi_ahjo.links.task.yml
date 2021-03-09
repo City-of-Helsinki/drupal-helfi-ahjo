@@ -18,5 +18,5 @@ entity.ahjo_issue.delete_form:
 entity.ahjo_issue.collection:
   title: Ahjo - Issue
   route_name: entity.ahjo_issue.collection
-  base_route: system.admin_content
+  base_route: helfi_api_base.integrations
   weight: 10
