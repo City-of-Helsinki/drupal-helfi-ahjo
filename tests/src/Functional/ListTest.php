@@ -34,7 +34,7 @@ class ListTest extends MigrationTestBase {
    */
   public function testList() : void {
     // Make sure anonymous user can't see the entity list.
-    $this->drupalGet('/admin/content/ahjo-issue');
+    $this->drupalGet('/admin/content/integrations/ahjo-issue');
     $this->assertSession()->statusCodeEquals(403);
 
     // Make sure logged in user with access remote entities overview permission
@@ -46,7 +46,7 @@ class ListTest extends MigrationTestBase {
     $this->drupalLogin($account);
     // Migrate entities and make sure we can see all entities from fixture.
     $this->createIssueMigration();
-    $this->drupalGet('/admin/content/ahjo-issue');
+    $this->drupalGet('/admin/content/integrations/ahjo-issue');
     $this->assertSession()->pageTextContains('Displaying 1 - 20 of 40');
     $this->assertSession()->pageTextContains('Name 1');
   }
