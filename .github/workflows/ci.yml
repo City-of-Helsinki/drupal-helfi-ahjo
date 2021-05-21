@@ -4,6 +4,7 @@ env:
   SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
   SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
   MODULE_NAME: helfi_ahjo
+jobs:
   tests:
     runs-on: ubuntu-latest
     strategy:
@@ -46,4 +47,3 @@ env:
           vendor/bin/drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
           vendor/bin/phpunit -c $DRUPAL_ROOT/phpunit.platform.xml --verbose --group $MODULE_NAME
-jobs:
