@@ -4,11 +4,13 @@ env:
   SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
   SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
   MODULE_NAME: helfi_ahjo
-jobs:
   tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['7.4', '8.0']
     container:
-      image: ghcr.io/city-of-helsinki/drupal-php-docker:7.4
+      image: ghcr.io/city-of-helsinki/drupal-php-docker:${{ matrix.php-versions }}
 
     services:
       db:
@@ -26,12 +28,12 @@ jobs:
 
       - name: Build project
         run: |
-          composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main $DRUPAL_ROOT --no-interaction --repository https://repository.drupal.hel.ninja/
+          composer create-project city-of-helsinki/drupal-helfi-platform:dev-main $DRUPAL_ROOT --no-interaction --repository https://repository.drupal.hel.ninja/
           cd $DRUPAL_ROOT
-          php -d sendmail_path=$(which true); drush --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
+          php -d sendmail_path=$(which true); vendor/bin/drush --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
           echo "$(jq --indent 4 '.repositories |= [{"type": "path", "url": "'$GITHUB_WORKSPACE'"}] + .' composer.json)" > composer.json
           composer require drupal/$MODULE_NAME
-          drush en $MODULE_NAME -y
+          vendor/bin/drush en $MODULE_NAME -y
 
       - name: Run PHPCS
         run: |
@@ -41,7 +43,7 @@ jobs:
       - name: Run PHPUnit tests
         run: |
           cd $DRUPAL_ROOT
-          drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
+          vendor/bin/drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
-          vendor/bin/phpunit -c $DRUPAL_ROOT/phpunit.xml.dist --verbose --group $MODULE_NAME
-
+          vendor/bin/phpunit -c $DRUPAL_ROOT/phpunit.platform.xml --verbose --group $MODULE_NAME
+jobs:
