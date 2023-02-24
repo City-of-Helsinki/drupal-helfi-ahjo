@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/City-of-Helsinki/drupal-module-helfi-ahjo/workflows/CI/badge.svg)
 
-Integrates [OpenAhjo](https://dev.hel.fi/apis/openahjo#documentation) with Drupal.
+This is a proof of concept module that integrates [OpenAhjo](https://dev.hel.fi/apis/openahjo#documentation) with Drupal. The module is not maintained at the moment (02-2023).
 
 ## Requirements
 
