@@ -40,4 +40,4 @@ all garbage collection tasks (such as cleaning removed remote entities), so you 
 
 Slack: #helfi-drupal (http://helsinkicity.slack.com/)
 
-Mail: helfi-drupal-aaaactuootjhcono73gc34rj2u@druid.slack.com
+Mail: drupal@hel.fi
